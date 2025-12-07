@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <style>
+    .title { font: bold 18px sans-serif; fill: #2e8b57; }
+    .header { font: bold 14px sans-serif; fill: #2e8b57; }
+    .box { fill: white; stroke: #333; stroke-width: 2; rx: 8; ry: 8; }
+    .text { font: 12px sans-serif; fill: #333; }
+    .arrow { stroke: #333; stroke-width: 2; marker-end: url(#arrowhead); }
+  </style>
+
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="300" y="30" text-anchor="middle" class="title">AI Documentation Architect System Architecture</text>
+
+  <!-- Master Agent -->
+  <rect x="225" y="60" width="150" height="50" class="box"/>
+  <text x="300" y="90" text-anchor="middle" class="text">AI Documentation Architect</text>
+
+  <!-- Sub Agents -->
+  <rect x="50" y="150" width="120" height="40" class="box"/>
+  <text x="110" y="175" text-anchor="middle" class="text">Research Expert</text>
+
+  <rect x="190" y="150" width="120" height="40" class="box"/>
+  <text x="250" y="175" text-anchor="middle" class="text">Technical Writer</text>
+
+  <rect x="330" y="150" width="120" height="40" class="box"/>
+  <text x="390" y="175" text-anchor="middle" class="text">Editor & Reviewer</text>
+
+  <rect x="470" y="150" width="120" height="40" class="box"/>
+  <text x="530" y="175" text-anchor="middle" class="text">Quality Validator</text>
+
+  <!-- Skills -->
+  <rect x="120" y="240" width="120" height="40" class="box"/>
+  <text x="180" y="265" text-anchor="middle" class="text">Content Architect</text>
+
+  <rect x="260" y="240" width="120" height="40" class="box"/>
+  <text x="320" y="265" text-anchor="middle" class="text">Style & Consistency</text>
+
+  <rect x="400" y="240" width="120" height="40" class="box"/>
+  <text x="460" y="265" text-anchor="middle" class="text">Website Builder</text>
+
+  <!-- Arrows -->
+  <line x1="300" y1="110" x2="110" y2="150" class="arrow"/>
+  <line x1="300" y1="110" x2="250" y2="150" class="arrow"/>
+  <line x1="300" y1="110" x2="390" y2="150" class="arrow"/>
+  <line x1="300" y1="110" x2="530" y2="150" class="arrow"/>
+
+  <line x1="300" y1="110" x2="180" y2="240" class="arrow"/>
+  <line x1="300" y1="110" x2="320" y2="240" class="arrow"/>
+  <line x1="300" y1="110" x2="460" y2="240" class="arrow"/>
+
+  <!-- Labels -->
+  <text x="100" y="210" text-anchor="middle" class="text">Research</text>
+  <text x="250" y="210" text-anchor="middle" class="text">Content Creation</text>
+  <text x="390" y="210" text-anchor="middle" class="text">Editing & Review</text>
+  <text x="530" y="210" text-anchor="middle" class="text">Validation</text>
+
+  <text x="180" y="295" text-anchor="middle" class="text">Structure</text>
+  <text x="320" y="295" text-anchor="middle" class="text">Formatting</text>
+  <text x="460" y="295" text-anchor="middle" class="text">Build</text>
+</svg>

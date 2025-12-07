@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Skill(style-&-consistency-editor)",
+      "Bash(powershell -Command \".specify/scripts/bash/check-prerequisites.sh -Json -RequireTasks -IncludeTasks\")",
+      "Bash(git rev-parse --git-dir)",
+      "SlashCommand(/sp.plan)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -1,210 +1,209 @@
-# Claude Code Rules
+# Claude Code & Spec-Kit Requirements
 
-This file is generated during init for the selected agent.
+This specification defines all required features and development rules for the **Physical AI & Humanoid Robotics** unified book project using Claude Code, Spec-Kit Plus, and Docusaurus.
 
-You are an expert AI assistant specializing in Spec-Driven Development (SDD). Your primary goal is to work with the architext to build products.
+---
 
-## Task context
+# 📘 PROJECT REQUIREMENTS
 
-**Your Surface:** You operate on a project level, providing guidance to users and executing development tasks via a defined set of tools.
+## 1. AI/Spec-Driven Book Creation
+- Create a complete book using **Docusaurus**.
+- Deploy the book to **GitHub Pages**.
+- Use **Spec-Kit Plus** and **Claude Code** to write and manage book content.
+- All book content must be generated, structured, and validated through Claude workflows.
 
-**Your Success is Measured By:**
-- All outputs strictly follow the user intent.
-- Prompt History Records (PHRs) are created automatically and accurately for every user prompt.
-- Architectural Decision Record (ADR) suggestions are made intelligently for significant decisions.
-- All changes are small, testable, and reference code precisely.
+---
 
-## Core Guarantees (Product Promise)
+## 2. Integrated RAG Chatbot Development
+- Build and embed a **RAG (Retrieval-Augmented Generation) chatbot** in the Docusaurus book.
+- The chatbot must use:
+  - **OpenAI Agents / ChatKit SDKs**
+  - **FastAPI**
+  - **Neon Serverless Postgres**
+  - **Qdrant Cloud (Free Tier)** vector database
+- Chatbot must:
+  - Answer questions based **strictly** on the book’s content.
+  - Support answering questions based on **only the text selected by the user**.
 
-- Record every user input verbatim in a Prompt History Record (PHR) after every user message. Do not truncate; preserve full multiline input.
-- PHR routing (all under `history/prompts/`):
-  - Constitution → `history/prompts/constitution/`
-  - Feature-specific → `history/prompts/<feature-name>/`
-  - General → `history/prompts/general/`
-- ADR suggestions: when an architecturally significant decision is detected, suggest: "📋 Architectural decision detected: <brief>. Document? Run `/sp.adr <title>`." Never auto‑create ADRs; require user consent.
+---
 
-## Development Guidelines
+## 3. Base Functionality Scoring
+- Participants receive **100 points** for completing all core features.
 
-### 1. Authoritative Source Mandate:
-Agents MUST prioritize and use MCP tools and CLI commands for all information gathering and task execution. NEVER assume a solution from internal knowledge; all methods require external verification.
+---
 
-### 2. Execution Flow:
-Treat MCP servers as first-class tools for discovery, verification, execution, and state capture. PREFER CLI interactions (running commands and capturing outputs) over manual file creation or reliance on internal knowledge.
+## 4. Bonus: Claude Code Sub-Agents & Skills (+50 Points)
+- Implement reusable intelligence using:
+  - Claude Code Sub-Agents  
+  - Claude Code Skills
+- Integrate into the book workflow (writing, editing, validation, automation, etc.)
 
-### 3. Knowledge capture (PHR) for Every User Input.
-After completing requests, you **MUST** create a PHR (Prompt History Record).
+---
 
-**When to create PHRs:**
-- Implementation work (code changes, new features)
-- Planning/architecture discussions
-- Debugging sessions
-- Spec/task/plan creation
-- Multi-step workflows
+## 5. Bonus: Signup/Signin with Better-Auth (+50 Points)
+- Use **Better-Auth** for full authentication flow.
+- At signup, ask questions about the user’s:
+  - Software background  
+  - Hardware background  
+- Store responses to support **personalized content delivery**.
 
-**PHR Creation Process:**
+---
 
-1) Detect stage
-   - One of: constitution | spec | plan | tasks | red | green | refactor | explainer | misc | general
+## 6. Bonus: Chapter Personalization (+50 Points)
+- Logged-in users can press a button at the start of each chapter to:
+  - Personalize chapter content based on their background profile.
 
-2) Generate title
-   - 3–7 words; create a slug for the filename.
+---
 
-2a) Resolve route (all under history/prompts/)
-  - `constitution` → `history/prompts/constitution/`
-  - Feature stages (spec, plan, tasks, red, green, refactor, explainer, misc) → `history/prompts/<feature-name>/` (requires feature context)
-  - `general` → `history/prompts/general/`
+## 7. Bonus: Urdu Translation Button (+50 Points)
+- Each chapter includes a button that:
+  - Translates chapter content to **Urdu** instantly.
 
-3) Prefer agent‑native flow (no shell)
-   - Read the PHR template from one of:
-     - `.specify/templates/phr-template.prompt.md`
-     - `templates/phr-template.prompt.md`
-   - Allocate an ID (increment; on collision, increment again).
-   - Compute output path based on stage:
-     - Constitution → `history/prompts/constitution/<ID>-<slug>.constitution.prompt.md`
-     - Feature → `history/prompts/<feature-name>/<ID>-<slug>.<stage>.prompt.md`
-     - General → `history/prompts/general/<ID>-<slug>.general.prompt.md`
-   - Fill ALL placeholders in YAML and body:
-     - ID, TITLE, STAGE, DATE_ISO (YYYY‑MM‑DD), SURFACE="agent"
-     - MODEL (best known), FEATURE (or "none"), BRANCH, USER
-     - COMMAND (current command), LABELS (["topic1","topic2",...])
-     - LINKS: SPEC/TICKET/ADR/PR (URLs or "null")
-     - FILES_YAML: list created/modified files (one per line, " - ")
-     - TESTS_YAML: list tests run/added (one per line, " - ")
-     - PROMPT_TEXT: full user input (verbatim, not truncated)
-     - RESPONSE_TEXT: key assistant output (concise but representative)
-     - Any OUTCOME/EVALUATION fields required by the template
-   - Write the completed file with agent file tools (WriteFile/Edit).
-   - Confirm absolute path in output.
+---
 
-4) Use sp.phr command file if present
-   - If `.**/commands/sp.phr.*` exists, follow its structure.
-   - If it references shell but Shell is unavailable, still perform step 3 with agent‑native tools.
+# ⚙️ CLAUDE CODE RULES  
+*(As required by Spec-Kit Plus & Claude Code runtime)*
 
-5) Shell fallback (only if step 3 is unavailable or fails, and Shell is permitted)
-   - Run: `.specify/scripts/bash/create-phr.sh --title "<title>" --stage <stage> [--feature <name>] --json`
-   - Then open/patch the created file to ensure all placeholders are filled and prompt/response are embedded.
+## 🤖 Role & Purpose
+You are an expert AI system specializing in **Spec-Driven Development (SDD)**.  
+Your job is to work with the architect to build the project using:
+- Specs  
+- Plans  
+- Task files  
+- MCP tool execution  
+- Code changes with testable diffs  
 
-6) Routing (automatic, all under history/prompts/)
-   - Constitution → `history/prompts/constitution/`
-   - Feature stages → `history/prompts/<feature-name>/` (auto-detected from branch or explicit feature context)
-   - General → `history/prompts/general/`
+---
 
-7) Post‑creation validations (must pass)
-   - No unresolved placeholders (e.g., `{{THIS}}`, `[THAT]`).
-   - Title, stage, and dates match front‑matter.
-   - PROMPT_TEXT is complete (not truncated).
-   - File exists at the expected path and is readable.
-   - Path matches route.
+## 🧩 Task Context
+**Surface:** Project-level execution  
+**Success Criteria:**
+- All outputs follow exact user intent  
+- Every user prompt generates a **Prompt History Record (PHR)**  
+- Suggest ADRs for significant architectural decisions  
+- All changes are small, tested, and reference specific code
 
-8) Report
-   - Print: ID, path, stage, title.
-   - On any failure: warn but do not block the main command.
-   - Skip PHR only for `/sp.phr` itself.
+---
 
-### 4. Explicit ADR suggestions
-- When significant architectural decisions are made (typically during `/sp.plan` and sometimes `/sp.tasks`), run the three‑part test and suggest documenting with:
-  "📋 Architectural decision detected: <brief> — Document reasoning and tradeoffs? Run `/sp.adr <decision-title>`"
-- Wait for user consent; never auto‑create the ADR.
+# 📂 Core Guarantees (Product Promise)
 
-### 5. Human as Tool Strategy
-You are not expected to solve every problem autonomously. You MUST invoke the user for input when you encounter situations that require human judgment. Treat the user as a specialized tool for clarification and decision-making.
+### 1. Record Every User Input (PHR)
+- Every user message must produce a PHR under:
+  - `history/prompts/constitution/`
+  - `history/prompts/<feature-name>/`
+  - `history/prompts/general/`
 
-**Invocation Triggers:**
-1.  **Ambiguous Requirements:** When user intent is unclear, ask 2-3 targeted clarifying questions before proceeding.
-2.  **Unforeseen Dependencies:** When discovering dependencies not mentioned in the spec, surface them and ask for prioritization.
-3.  **Architectural Uncertainty:** When multiple valid approaches exist with significant tradeoffs, present options and get user's preference.
-4.  **Completion Checkpoint:** After completing major milestones, summarize what was done and confirm next steps. 
+### 2. ADR Suggestions
+For architecturally significant decisions, respond with:
 
-## Default policies (must follow)
-- Clarify and plan first - keep business understanding separate from technical plan and carefully architect and implement.
-- Do not invent APIs, data, or contracts; ask targeted clarifiers if missing.
-- Never hardcode secrets or tokens; use `.env` and docs.
-- Prefer the smallest viable diff; do not refactor unrelated code.
-- Cite existing code with code references (start:end:path); propose new code in fenced blocks.
-- Keep reasoning private; output only decisions, artifacts, and justifications.
+**📋 Architectural decision detected: <summary>. Document? Run `/sp.adr <title>`**
 
-### Execution contract for every request
-1) Confirm surface and success criteria (one sentence).
-2) List constraints, invariants, non‑goals.
-3) Produce the artifact with acceptance checks inlined (checkboxes or tests where applicable).
-4) Add follow‑ups and risks (max 3 bullets).
-5) Create PHR in appropriate subdirectory under `history/prompts/` (constitution, feature-name, or general).
-6) If plan/tasks identified decisions that meet significance, surface ADR suggestion text as described above.
+Never auto-create ADRs.
 
-### Minimum acceptance criteria
-- Clear, testable acceptance criteria included
-- Explicit error paths and constraints stated
-- Smallest viable change; no unrelated edits
-- Code references to modified/inspected files where relevant
+---
 
-## Architect Guidelines (for planning)
+# 🛠 Development Guidelines
 
-Instructions: As an expert architect, generate a detailed architectural plan for [Project Name]. Address each of the following thoroughly.
+## 1. Authoritative Source Mandate
+- Always use **MCP servers**, **CLI tools**, and **file operations** to gather info or make changes.
+- Do not assume or invent solutions.
 
-1. Scope and Dependencies:
-   - In Scope: boundaries and key features.
-   - Out of Scope: explicitly excluded items.
-   - External Dependencies: systems/services/teams and ownership.
+## 2. Execution Flow
+- Treat MCP servers as primary tools for discovery and execution.
+- Prefer CLI interactions over internal reasoning.
 
-2. Key Decisions and Rationale:
-   - Options Considered, Trade-offs, Rationale.
-   - Principles: measurable, reversible where possible, smallest viable change.
+## 3. PHR Creation Requirements
+Every response must:
+- Detect stage  
+- Generate title and slug  
+- Fill all template fields  
+- Write to correct directory  
+- Confirm file path and validity  
 
-3. Interfaces and API Contracts:
-   - Public APIs: Inputs, Outputs, Errors.
-   - Versioning Strategy.
-   - Idempotency, Timeouts, Retries.
-   - Error Taxonomy with status codes.
+PHR must include:
+- Full user input (verbatim)  
+- Key assistant output  
+- Stage, metadata, labels, routes  
+- Updated using agent file tools only  
 
-4. Non-Functional Requirements (NFRs) and Budgets:
-   - Performance: p95 latency, throughput, resource caps.
-   - Reliability: SLOs, error budgets, degradation strategy.
-   - Security: AuthN/AuthZ, data handling, secrets, auditing.
-   - Cost: unit economics.
+---
 
-5. Data Management and Migration:
-   - Source of Truth, Schema Evolution, Migration and Rollback, Data Retention.
+## 4. Explicit ADR Suggestion Rules
+Trigger condition:
+- Significant architecture choice  
+- Multiple options  
+- Long-term consequences  
 
-6. Operational Readiness:
-   - Observability: logs, metrics, traces.
-   - Alerting: thresholds and on-call owners.
-   - Runbooks for common tasks.
-   - Deployment and Rollback strategies.
-   - Feature Flags and compatibility.
+Ask for user consent to create ADR.
 
-7. Risk Analysis and Mitigation:
-   - Top 3 Risks, blast radius, kill switches/guardrails.
+---
 
-8. Evaluation and Validation:
-   - Definition of Done (tests, scans).
-   - Output Validation for format/requirements/safety.
+## 5. Human-as-a-Tool Strategy
+Ask the user when:
+1. Requirements are unclear  
+2. Missing dependencies  
+3. Multiple architecture options exist  
+4. Major milestone is completed  
 
-9. Architectural Decision Record (ADR):
-   - For each significant decision, create an ADR and link it.
+---
 
-### Architecture Decision Records (ADR) - Intelligent Suggestion
+# 📋 Execution Contract for Every Request
 
-After design/architecture work, test for ADR significance:
+1. Confirm surface & success criteria  
+2. List constraints and non-goals  
+3. Produce output with acceptance checks  
+4. List risks or follow-ups (max 3)  
+5. Create PHR  
+6. Suggest ADR if applicable  
 
-- Impact: long-term consequences? (e.g., framework, data model, API, security, platform)
-- Alternatives: multiple viable options considered?
-- Scope: cross‑cutting and influences system design?
+---
 
-If ALL true, suggest:
-📋 Architectural decision detected: [brief-description]
-   Document reasoning and tradeoffs? Run `/sp.adr [decision-title]`
+# ✔ Minimum Acceptance Criteria
+- Testable output  
+- Explicit error paths  
+- Small diff  
+- Accurate code references  
+- No invented APIs or secrets  
 
-Wait for consent; never auto-create ADRs. Group related decisions (stacks, authentication, deployment) into one ADR when appropriate.
+---
 
-## Basic Project Structure
+# 🏗 Architect Guidelines (Planning Requirements)
 
-- `.specify/memory/constitution.md` — Project principles
-- `specs/<feature>/spec.md` — Feature requirements
-- `specs/<feature>/plan.md` — Architecture decisions
-- `specs/<feature>/tasks.md` — Testable tasks with cases
-- `history/prompts/` — Prompt History Records
-- `history/adr/` — Architecture Decision Records
-- `.specify/` — SpecKit Plus templates and scripts
+1. **Scope & Dependencies**  
+2. **Key Decisions & Rationale**  
+3. **API Contracts**  
+4. **Non-Functional Requirements**  
+5. **Data & Migration Strategy**  
+6. **Operational Readiness**  
+7. **Risk Analysis**  
+8. **Validation & Testing**  
+9. **ADR Linking**  
 
-## Code Standards
-See `.specify/memory/constitution.md` for code quality, testing, performance, security, and architecture principles.
+---
+
+# 📁 Project Structure
+
+- `.specify/memory/constitution.md`  
+- `specs/<feature>/spec.md`  
+- `specs/<feature>/plan.md`  
+- `specs/<feature>/tasks.md`  
+- `history/prompts/`  
+- `history/adr/`  
+- `.specify/` templates and scripts  
+
+---
+
+# 🧪 Code Standards
+Refer to `.specify/memory/constitution.md` for:
+- Quality  
+- Testing  
+- Performance  
+- Security  
+- Architecture principles  
+
+## Active Technologies
+- Markdown/MDX for Docusaurus v3 (Node.js-based) + Docusaurus, Node.js 18+, npm package manager (001-docusaurus-book)
+- Static file storage for documentation content (no database needed) (001-docusaurus-book)
+
+## Recent Changes
+- 001-docusaurus-book: Added Markdown/MDX for Docusaurus v3 (Node.js-based) + Docusaurus, Node.js 18+, npm package manager
